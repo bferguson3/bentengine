@@ -138,10 +138,10 @@ int main(int argn, char** args)
 	secondCounter = 0;
 	frameCounter = 0;
 
-	char* fontPath = "cc.ttf";
-	TTF_Font* font = TTF_OpenFont(fontPath, 64);
-	if(font == NULL)
-		printf("Failed to load font from path: %s\n", fontPath);
+	//char* fontPath = "cc.ttf";
+	//TTF_Font* font = TTF_OpenFont(fontPath, 64);
+	//if(font == NULL)
+	//	printf("Failed to load font from path: %s\n", fontPath);
 
 	SDL_Surface* msg = TTF_RenderText_Solid(font, "Hello World", clrWhite);
 	SDL_Surface* msg2 = TTF_RenderText_Solid(font, "Hello World", clrBlack);
@@ -267,6 +267,8 @@ int main(int argn, char** args)
 	//maptex/mapobjtex
 	SDL_DestroyTexture(maptex);
 	SDL_DestroyTexture(mapobjtex);
+	// fonts 
+	//TTF_CloseFont(font);
 	Cleanup();
 	// End game
 	return 0;
