@@ -50,6 +50,7 @@ typedef signed char s8;
 typedef struct tile { 
 	SDL_Surface* source;
 } Tile;
+
 Tile loadedTiles[256];
 
 typedef struct sprite { 
@@ -120,7 +121,7 @@ void LoadAllTiles(const char* filename, \
 					u8 tileW, u8 tileH);
 void StateInput(volatile u8* keystate);
 void Draw();
-Sprite NewSprite(char* imgsrc, SDL_Renderer* renderer, int x, int y, int w, int h);
+Sprite* NewSprite(char* imgsrc, SDL_Renderer* renderer, int x, int y, int w, int h);
 //Tile* NewTile(char* imgsrc, u8 index);
 void Input(SDL_Event e);
 SDL_Surface* LoadBitmapToCanvas(char* path);
@@ -412,7 +413,7 @@ void Draw()
 
 }
 
-Sprite NewSprite(char* imgsrc, SDL_Renderer* renderer, int x, int y, int w, int h)
+Sprite* NewSprite(char* imgsrc, SDL_Renderer* renderer, int x, int y, int w, int h)
 {
 	Sprite s;
 	s.source = IMG_Load(imgsrc);
@@ -426,7 +427,7 @@ Sprite NewSprite(char* imgsrc, SDL_Renderer* renderer, int x, int y, int w, int 
 	s.pos.w = w;
 	s.pos.h = h;
 	SDL_FreeSurface(s.source);
-	return s;
+	return &s;
 }
 
 /*
