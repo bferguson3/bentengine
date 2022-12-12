@@ -42,8 +42,12 @@ int SDLEngine::init()
 #endif
 
     // allocate drawables pointers arrays
-    texturesToRender = (SDL_Texture**)malloc(sizeof(SDL_Texture*) * 1);
-    drawableText = (Text**)malloc(sizeof(Text*) * 1);
+    textureMAX = 64;
+    textMAX = 64;
+    goMAX = 64;
+    texturesToRender = (SDL_Texture**)malloc(sizeof(SDL_Texture*) * textureMAX);
+    drawableText = (Text**)malloc(sizeof(Text*) * textMAX);
+    drawableObjects = (GameObject**)malloc(sizeof(GameObject*) * goMAX);
 
     printf("SDL2 initialized OK!\n");
 
@@ -119,7 +123,11 @@ void SDLEngine::draw()
 void SDLEngine::addDrawable(SDL_Texture* tex)
 {
     textureCount++;
-    texturesToRender = (SDL_Texture**)realloc(texturesToRender, sizeof(SDL_Texture*) * textureCount);
+    if (textureCount > textureMAX)
+    {
+        textureMAX += 64;
+        texturesToRender = (SDL_Texture**)realloc(texturesToRender, sizeof(SDL_Texture*) * textureMAX);
+    }
     texturesToRender[textureCount - 1] = tex;
 }
 
@@ -127,8 +135,23 @@ void SDLEngine::addDrawable(Text* t)
 {
     // printf("%p\n", t);
     textObjectCt++;
-    drawableText = (Text**)realloc(drawableText, sizeof(Text*) * textObjectCt);
+    if (textObjectCt > textMAX)
+    {
+        textMAX += 64;
+        drawableText = (Text**)realloc(drawableText, sizeof(Text*) * textMAX);
+    }
     drawableText[textObjectCt - 1] = t;
+}
+
+void SDLEngine::addDrawable(GameObject* go)
+{
+    gameObjectCt++;
+    if (gameObjectCt > goMAX)
+    {
+        goMAX += 64;
+        drawableObjects = (GameObject**)realloc(go, sizeof(GameObject*) * gameObjectCt);
+    }
+    drawableObjects[gameObjectCt - 1] = go;
 }
 
 SDL_Renderer* SDLEngine::GetRenderer()

@@ -1,4 +1,6 @@
 // gameobject.h
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
 
 #include <SDL2/SDL.h>
 
@@ -24,3 +26,5 @@ class GameObject
     SDL_Texture* texture;
     SDL_Rect pos;
 };
+
+#endif

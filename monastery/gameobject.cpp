@@ -1,11 +1,15 @@
 // gameobject.c
 #include "gameobject.h"
+#include "renderer.h"
+
+extern SDLEngine engine;
 
 GameObject::GameObject()
 {
     // Constructor
     texture = NULL;
     pos = (SDL_Rect){0, 0, 16, 16};
+    engine.addDrawable(this);
 }
 
 GameObject::~GameObject()
@@ -22,6 +26,7 @@ GameObject::GameObject(SDL_Texture* tex, SDL_Rect _pos)
     // constructor with texture and position
     texture = tex;
     pos = _pos;
+    engine.addDrawable(this);
 }
 
 GameObject::GameObject(SDL_Texture* tex, int x, int y, int w, int h)
@@ -29,6 +34,7 @@ GameObject::GameObject(SDL_Texture* tex, int x, int y, int w, int h)
     // constructor with texture and position arguments
     texture = tex;
     pos = (SDL_Rect){x, y, w, h};
+    engine.addDrawable(this);
 }
 
 void GameObject::SetPos(int x, int y)

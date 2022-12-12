@@ -1,4 +1,6 @@
 
+#ifndef __BENTGINE_H__
+#define __BENTGINE_H__
 // typedef unsigned char bool;
 #define false 0
 #define true 1
@@ -9,7 +11,7 @@
 typedef unsigned char u8;
 typedef signed char s8;
 #ifndef NULL
-#define NULL ((void *)0)
+#define NULL ((void*)0)
 #endif
 #define null NULL
 #define Null NULL
@@ -42,3 +44,5 @@ typedef signed char s8;
 #define JOY_RIGHT bit(3)
 #define JOY_A bit(4)
 #define JOY_B bit(5)
+
+#endif

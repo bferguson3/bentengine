@@ -22,6 +22,7 @@ class SDLEngine
     void draw();
     void addDrawable(SDL_Texture* tex);
     void addDrawable(Text* t);
+    void addDrawable(GameObject* go);
 
     SDL_Renderer* GetRenderer();
     TTF_Font* GetCurrentFont();
@@ -41,8 +42,13 @@ class SDLEngine
     // int surfaceCount;
     int textureCount;
     int textObjectCt;
+    int gameObjectCt;
     SDL_Texture** texturesToRender;
     Text** drawableText;
+    GameObject** drawableObjects;
+    int textureMAX;
+    int textMAX;
+    int goMAX;
 
     double frameCounter;
     float perfFrequency;
