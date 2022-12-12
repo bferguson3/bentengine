@@ -2,23 +2,21 @@
 #define __TEXT_H__
 
 #include <SDL2/SDL.h>
+#include "gameobject.h"
 
-class Text
+class Text : public GameObject
 {
   public:
 
-    Text(const char* str, SDL_Rect* pos);
+    Text(const char* _str, SDL_Rect* pos);
+    Text(const char* _str, int x, int y, int w, int h);
     ~Text();
 
     void display();
 
-    const char* str;
-    SDL_Rect* pos;
-    SDL_Texture* texture;
-
   private:
 
-    SDL_Surface* surface;
+    const char* str;
 };
 
 #endif

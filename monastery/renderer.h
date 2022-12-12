@@ -23,18 +23,19 @@ class SDLEngine
     void addDrawable(SDL_Texture* tex);
     void addDrawable(Text* t);
 
-    double frameCounter;
-
-    TTF_Font* defaultFont;
-
-    SDL_Renderer* renderer;
+    SDL_Renderer* GetRenderer();
+    TTF_Font* GetCurrentFont();
+    float GetPerfFrequency();
 
   private:
 
     // backend
     SDL_Window* window;
+    SDL_Renderer* renderer;
 
-    float perfFrequency;
+    TTF_Font* defaultFont;
+    TTF_Font* currentFont;
+
     Uint32 rmask, gmask, bmask, amask;
 
     // int surfaceCount;
@@ -42,6 +43,9 @@ class SDLEngine
     int textObjectCt;
     SDL_Texture** texturesToRender;
     Text** drawableText;
+
+    double frameCounter;
+    float perfFrequency;
 
     char* fontPath;
 

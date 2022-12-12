@@ -16,6 +16,7 @@ int SDLEngine::init()
     defaultFont = TTF_OpenFont("Bakemono-Stereo-Medium-trial.ttf", 64);
     if (defaultFont == NULL)
         printf("Failed to load font\n");
+    currentFont = defaultFont;
 
     // window and renderer
     if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE, &window,
@@ -129,3 +130,13 @@ void SDLEngine::addDrawable(Text* t)
     drawableText = (Text**)realloc(drawableText, sizeof(Text*) * textObjectCt);
     drawableText[textObjectCt - 1] = t;
 }
+
+SDL_Renderer* SDLEngine::GetRenderer()
+{
+    // get
+    return renderer;
+}
+
+TTF_Font* SDLEngine::GetCurrentFont() { return currentFont; }
+
+float SDLEngine::GetPerfFrequency() { return perfFrequency; }
