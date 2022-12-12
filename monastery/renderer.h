@@ -2,15 +2,14 @@
 #ifndef __RENDERER_H__
 #define __RENDERER_H__
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+#include "text.h"
 #include <SDL2/SDL_ttf.h>
-
 #include "bentgine.h"
 
 const SDL_Color clrWhite = {255, 255, 255, 0};
 const SDL_Color clrBlack = {0, 0, 0, 0};
+
+// #define MAXIMUM_ALLOCATED_TEXTURES 1024
 
 class SDLEngine
 {
@@ -19,29 +18,32 @@ class SDLEngine
     SDLEngine();
     ~SDLEngine();
 
-    void hello();
-
-    void update(bool *q);
+    void update(bool* q);
     void draw();
+    void addDrawable(SDL_Texture* tex);
+    void addDrawable(Text* t);
 
     double frameCounter;
+
+    TTF_Font* defaultFont;
+
+    SDL_Renderer* renderer;
 
   private:
 
     // backend
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+    SDL_Window* window;
 
     float perfFrequency;
     Uint32 rmask, gmask, bmask, amask;
 
-    SDL_Surface *msg;
-    SDL_Surface *msg2;
-    SDL_Texture *msgtex;
-    SDL_Texture *msgtex2;
+    // int surfaceCount;
+    int textureCount;
+    int textObjectCt;
+    SDL_Texture** texturesToRender;
+    Text** drawableText;
 
-    TTF_Font *defaultFont;
-    char *fontPath;
+    char* fontPath;
 
     int init();
 };

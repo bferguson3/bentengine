@@ -1,4 +1,6 @@
 // renderer.cpp
+
+#include <SDL2/SDL.h>
 #include "renderer.h"
 
 int SDLEngine::init()
@@ -16,9 +18,8 @@ int SDLEngine::init()
         printf("Failed to load font\n");
 
     // window and renderer
-    if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT,
-                                    SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE,
-                                    &window, &renderer) == -1)
+    if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE, &window,
+                                    &renderer) == -1)
     {
         printf("Couldn't make window. SDL error: %s\n", SDL_GetError());
         return false;
@@ -39,19 +40,28 @@ int SDLEngine::init()
     amask = 0xff000000;
 #endif
 
+    // allocate drawables pointers arrays
+    texturesToRender = (SDL_Texture**)malloc(sizeof(SDL_Texture*) * 1);
+    drawableText = (Text**)malloc(sizeof(Text*) * 1);
+
     printf("SDL2 initialized OK!\n");
+
     return true;
 }
 
 // constructor
 SDLEngine::SDLEngine()
 {
+    // initialize drawable pointers
+    // surfaceCount = 0;
+    textureCount = 0;
+    textObjectCt = 0;
+
     // SDL core
     init();
 
     // Set pixel scaling mode
-    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH / PIXELSCALE,
-                             SCREEN_HEIGHT / PIXELSCALE);
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH / PIXELSCALE, SCREEN_HEIGHT / PIXELSCALE);
     // Set NEAREST vs LINEAR - doesnt work?
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     // black background color
@@ -61,15 +71,14 @@ SDLEngine::SDLEngine()
 // destructor
 SDLEngine::~SDLEngine()
 {
+    free(texturesToRender);
+    free(drawableText);
+
     // windows and renderers
     SDL_DestroyRenderer(renderer);
     renderer = NULL;
     SDL_DestroyWindow(window);
     window = NULL;
-
-    // todo, make this auto
-    SDL_DestroyTexture(msgtex);
-    // SDL_DestroyTexture(msgtex2);
 
     SDL_Quit();
 
@@ -78,19 +87,7 @@ SDLEngine::~SDLEngine()
 #endif
 }
 
-void SDLEngine::hello()
-{
-    msg = TTF_RenderText_Solid(defaultFont, "Hello World", clrWhite);
-    // msg2 = TTF_RenderText_Solid(defaultFont, "Hello World", clrBlack);
-
-    msgtex = SDL_CreateTextureFromSurface(renderer, msg);
-    // msgtex2 = SDL_CreateTextureFromSurface(renderer, msg2);
-
-    SDL_FreeSurface(msg);
-    // SDL_FreeSurface(msg2);
-}
-
-void SDLEngine::update(bool *quitFlag)
+void SDLEngine::update(bool* quitFlag)
 {
     SDL_Event e;
 
@@ -106,19 +103,29 @@ void SDLEngine::draw()
     // CLS
     SDL_RenderClear(renderer);
 
-    // rendercopy takes a srcrest (null if all) and dstrect (null if stretch to
-    // full)
-    SDL_Rect dst = {0, 0, 100, 25};
-    SDL_RenderCopy(renderer, msgtex, NULL, &dst);
-    // SDL_RenderCopy(renderer, msgtex2, NULL, NULL);
-
-    // MAP!
-    // SDL_RenderCopy(renderer, maptex, &mapCamera, NULL);
-    // SDL_RenderCopy(renderer, mapobjtex, &mapCamera, NULL);
-    // sel
-    // SDL_RenderCopy(renderer, dotSelector, NULL, &mapSelector);
+    // rendercopy takes a srcrest (null if all) and dstrect (null if stretch to full)
+    for (int i = 0; i < textObjectCt; i++)
+    {
+        drawableText[i]->display();
+    }
 
     // Drawit
     SDL_RenderPresent(renderer);
+
     frameCounter++;
+}
+
+void SDLEngine::addDrawable(SDL_Texture* tex)
+{
+    textureCount++;
+    texturesToRender = (SDL_Texture**)realloc(texturesToRender, sizeof(SDL_Texture*) * textureCount);
+    texturesToRender[textureCount - 1] = tex;
+}
+
+void SDLEngine::addDrawable(Text* t)
+{
+    // printf("%p\n", t);
+    textObjectCt++;
+    drawableText = (Text**)realloc(drawableText, sizeof(Text*) * textObjectCt);
+    drawableText[textObjectCt - 1] = t;
 }

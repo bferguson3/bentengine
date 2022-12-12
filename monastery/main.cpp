@@ -1,23 +1,25 @@
+#include "text.h"
+#include "renderer.h"
+
 #include <stdio.h>
 
-#include "renderer.h"
+// init sdl class
+SDLEngine engine;
 
 int main(int argn, char **argv)
 {
-    // init sdl class
-    SDLEngine sdl2;
 
-    // print HW
-    sdl2.hello();
+    SDL_Rect loc = {0, 0, 128, 24};
+    Text *hw = new Text("Hello World!", &loc);
 
     bool q = false;
     while (!q)
     {
         // update
-        sdl2.update(&q);
+        engine.update(&q);
 
         // draw frame
-        sdl2.draw();
+        engine.draw();
     }
 
     return 0;
