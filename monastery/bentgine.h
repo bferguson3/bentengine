@@ -1,19 +1,19 @@
 
-//typedef unsigned char bool;
+// typedef unsigned char bool;
 #define false 0
 #define true 1
-#define False false 
-#define True true 
-#define FALSE False 
-#define TRUE True 
+#define False false
+#define True true
+#define FALSE False
+#define TRUE True
 typedef unsigned char u8;
 typedef signed char s8;
-#ifndef NULL 
-#define NULL ((void*)0)
-#endif 
-#define null NULL 
-#define Null NULL 
-#define bit(n) (1<<n)
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+#define null NULL
+#define Null NULL
+#define bit(n) (1 << n)
 
 #define OPAQUE 0
 
@@ -26,8 +26,8 @@ typedef signed char s8;
 // 720x360 - 1/2 720p
 // 640x400 - 2x vga
 // 420x240 - 1/3 720p
-#define SCREEN_WIDTH 320*PIXELSCALE//720*PIXELSCALE
-#define SCREEN_HEIGHT 200*PIXELSCALE//360*PIXELSCALE
+#define SCREEN_WIDTH 320 * PIXELSCALE  // 720*PIXELSCALE
+#define SCREEN_HEIGHT 200 * PIXELSCALE // 360*PIXELSCALE
 
 #define FPS_120 ((float)(1000.0f / 120.0f))
 #define FPS_90 ((float)(1000.0f / 90.0f))
