@@ -15,7 +15,6 @@ GameObject::~GameObject()
     SDL_DestroyTexture(texture);
     // set pos to 0
     pos = (SDL_Rect){0, 0, 0, 0};
-    delete this;
 }
 
 GameObject::GameObject(SDL_Texture* tex, SDL_Rect _pos)
