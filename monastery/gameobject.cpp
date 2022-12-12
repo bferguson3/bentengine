@@ -57,3 +57,9 @@ void GameObject::SetRect(SDL_Rect r) { pos = r; }
 SDL_Rect* GameObject::GetRect() { return &pos; }
 
 SDL_Texture* GameObject::GetTexture() { return texture; }
+
+void GameObject::display()
+{
+    // simple!
+    SDL_RenderCopy(engine.GetRenderer(), GetTexture(), NULL, GetRect());
+}

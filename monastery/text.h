@@ -12,8 +12,6 @@ class Text : public GameObject
     Text(const char* _str, int x, int y, int w, int h);
     ~Text();
 
-    void display();
-
   private:
 
     const char* str;

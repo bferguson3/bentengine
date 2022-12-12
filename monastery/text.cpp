@@ -35,9 +35,3 @@ Text::~Text()
     // surface is freed on creation and texture is freed on the renderer. just delete the obj.
     delete this;
 }
-
-void Text::display()
-{
-    // simple!
-    SDL_RenderCopy(engine.GetRenderer(), GetTexture(), NULL, GetRect());
-}

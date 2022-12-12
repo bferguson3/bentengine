@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <SDL2/SDL_image.h>
 #include "renderer.h"
 #include "text.h"
 
@@ -18,18 +19,20 @@ enum GameState
     TESTSTATE
 } gameState;
 
+GameObject* player;
+
 // functions
 void FrameDelay(float fps, float frameStart, float frameEnd);
 void DoInput();
 void LoadScene(int sceneNo);
-
-GameObject p;
+SDL_Texture* LoadImageToTexture(char* path);
 
 // main!
 int main(int argn, char** argv)
 {
     // hello world!
     Text* hw = new Text("Hello World!", 0, 0, 128, 24);
+    player = new GameObject();
 
     LoadScene(0);
 
@@ -84,8 +87,21 @@ void DoInput()
 void LoadScene(int sceneNo)
 {
     // load in player graphics
-
+    player->SetTexture(LoadImageToTexture("monkspr.png"));
+    player->SetSize(64, 64);
     // set states TODO - make this class mgr?
     inputMode = DISABLED;
     gameState = TESTSTATE;
+}
+
+SDL_Texture* LoadImageToTexture(char* path)
+{
+    SDL_Surface* cv = IMG_Load(path); // SDL_LoadBMP(path);
+    if (cv == NULL)
+    {
+        printf("Couldn't load image %s. Error: %s", path, SDL_GetError());
+    }
+    SDL_Texture* st = SDL_CreateTextureFromSurface(engine.GetRenderer(), cv);
+    SDL_FreeSurface(cv);
+    return st;
 }

@@ -21,6 +21,8 @@ class GameObject
     SDL_Rect* GetRect();
     SDL_Texture* GetTexture();
 
+    void display();
+
   private:
 
     SDL_Texture* texture;

@@ -113,7 +113,10 @@ void SDLEngine::draw()
     {
         drawableText[i]->display();
     }
-
+    for (int i = 0; i < gameObjectCt; i++)
+    {
+        drawableObjects[i]->display();
+    }
     // Drawit
     SDL_RenderPresent(renderer);
 
