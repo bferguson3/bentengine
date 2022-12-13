@@ -1,3 +1,4 @@
 **/*.o
 **/app
 .clang-format
+monastery/libs

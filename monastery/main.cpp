@@ -7,9 +7,6 @@
 #include "sprite.h"
 #include "player.h"
 
-// init sdl class
-SDLEngine engine;
-
 enum InputMode
 {
     TESTINPUT,
@@ -22,8 +19,11 @@ enum GameState
     TESTSTATE
 } gameState;
 
-Player* player;
+// init sdl class
+SDLEngine engine;
 
+// globals
+Player* player;
 int frameCounter;
 
 // functions
@@ -40,6 +40,7 @@ int main(int argn, char** argv)
     player = new Player(new TileSheet("monkspr.png", 4, 1, 16, 24));
 
     player->SetTexture(0);
+    player->SetPos(64, 32);
 
     LoadScene(0);
 
@@ -95,11 +96,16 @@ void DoInput()
 
 void LoadScene(int sceneNo)
 {
-    // load in player graphics
-    player->SetSize(16, 24);
-    // set states TODO - make this class mgr?
-    inputMode = DISABLED;
-    gameState = TESTSTATE;
+    switch (sceneNo)
+    {
+    case 0:
+        // load in player graphics
+        player->SetSize(16, 24);
+        // set states TODO - make this class mgr?
+        inputMode = DISABLED;
+        gameState = TESTSTATE;
+        break;
+    }
 }
 
 SDL_Texture* LoadImageToTexture(char* path)

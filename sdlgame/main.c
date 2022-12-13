@@ -255,7 +255,7 @@ int main(int argn, char** args)
 			SDL_FreeSurface(loadedTiles[i].source);
 	}
 	// and sprites
-	// TODO 
+	
 	// all maps and UIs
 	SDL_FreeSurface(map);
 	SDL_FreeSurface(mapObjects);
