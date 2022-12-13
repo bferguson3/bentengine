@@ -4,6 +4,8 @@
 #include "renderer.h"
 #include "text.h"
 #include "tilesheet.h"
+#include "sprite.h"
+#include "player.h"
 
 // init sdl class
 SDLEngine engine;
@@ -20,7 +22,9 @@ enum GameState
     TESTSTATE
 } gameState;
 
-GameObject* player;
+Player* player;
+
+int frameCounter;
 
 // functions
 void FrameDelay(float fps, float frameStart, float frameEnd);
@@ -33,10 +37,9 @@ int main(int argn, char** argv)
 {
     // hello world!
     Text* hw = new Text("Hello World!", 0, 0, 128, 24);
-    player = new GameObject();
-    TileSheet* ts = new TileSheet("monkspr.png", 4, 1, 16, 24);
+    player = new Player(new TileSheet("monkspr.png", 4, 1, 16, 24));
 
-    player->SetTexture(ts->GetTile(0));
+    player->SetTexture(0);
 
     LoadScene(0);
 
@@ -45,28 +48,26 @@ int main(int argn, char** argv)
     while (!q)
     {
         frameStart = SDL_GetPerformanceCounter();
-
         // Main Code :
         // CSM check
         switch (gameState)
         {
         case TESTSTATE:
+            player->update();
             break;
         }
-        // input parser
-        DoInput();
-        // run event parser
-        engine.update(&q);
-        // draw frame
-        engine.draw();
+
+        DoInput();         // input parser
+        engine.update(&q); // run event parser
+        engine.draw();     // draw frame
+
         frameEnd = SDL_GetPerformanceCounter();
-        // lock framerate
-        FrameDelay(FPS_60, frameStart, frameEnd);
+        FrameDelay(FPS_60, frameStart, frameEnd); // lock framerate
     }
 
     delete player;
     delete hw;
-    delete ts;
+    // tilesheets are deleted inside sprites.
 
     return 0;
 }

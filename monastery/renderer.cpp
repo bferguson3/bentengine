@@ -105,6 +105,8 @@ void SDLEngine::update(bool* quitFlag)
     }
 }
 
+int SDLEngine::GetFrame() { return frameCounter; }
+
 void SDLEngine::draw()
 {
     // CLS
@@ -113,18 +115,22 @@ void SDLEngine::draw()
     // Layer 0
     for (int i = 0; i < gameObjectCt; i++)
     {
-        drawableObjects[i]->display();
+        drawableObjects[i]->draw();
     }
     // Layer 1
     for (int i = 0; i < textObjectCt; i++)
     {
-        drawableText[i]->display();
+        drawableText[i]->draw();
     }
 
     // Drawit
     SDL_RenderPresent(renderer);
 
     frameCounter++;
+    if (frameCounter > 60) // TODO: adjust for variable fps
+    {
+        frameCounter = 0;
+    }
 }
 
 void SDLEngine::addDrawable(SDL_Texture* tex)

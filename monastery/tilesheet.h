@@ -1,4 +1,6 @@
 // tilesheet.h
+#ifndef __TILESHEET_H__
+#define __TILESHEET_H__
 
 class TileSheet
 {
@@ -14,3 +16,5 @@ class TileSheet
     int totalTiles;
     SDL_Texture** textures;
 };
+
+#endif

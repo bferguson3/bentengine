@@ -37,6 +37,7 @@ class SDLEngine
     SDL_Renderer* GetRenderer();
     TTF_Font* GetCurrentFont();
     float GetPerfFrequency();
+    int GetFrame();
 
   private:
 
@@ -60,7 +61,7 @@ class SDLEngine
     int textMAX;
     int goMAX;
 
-    double frameCounter;
+    int frameCounter;
     float perfFrequency;
 
     char* fontPath;
