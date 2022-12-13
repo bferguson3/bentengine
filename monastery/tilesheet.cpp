@@ -11,8 +11,8 @@ extern SDLEngine engine;
 TileSheet::TileSheet(const char* src, int tileCtX, int tileCtY, int tileSizeX, int tileSizeY)
 {
     // constructor
-    int totalTiles = tileCtY * tileCtX;
-    surfaces = (SDL_Surface**)malloc(sizeof(SDL_Surface*) * totalTiles);
+    totalTiles = tileCtY * tileCtX;
+    textures = (SDL_Texture**)malloc(sizeof(SDL_Texture*) * totalTiles);
 
     SDL_Surface* tileMap = IMG_Load(src);
 
@@ -28,22 +28,36 @@ TileSheet::TileSheet(const char* src, int tileCtX, int tileCtY, int tileSizeX, i
     {
         for (int x = 0; x < tileCtX; x++)
         {
+            // set slice size
             int i = (y * tileCtY) + x;
             tslice.x = x * tileSizeX;
             tslice.y = y * tileSizeY;
-            surfaces[i] =
+            // make blank surface
+            SDL_Surface* surf =
                 SDL_CreateRGBSurface((Uint32)NULL, tileSizeX, tileSizeY, BPP_32, m.rmask, m.gmask, m.bmask, m.amask);
-            SDL_BlitSurface(tileMap, &tslice, surfaces[i], NULL);
+            // blit slice to surface
+            SDL_BlitSurface(tileMap, &tslice, surf, NULL);
+            // make texture
+            textures[i] = SDL_CreateTextureFromSurface(engine.GetRenderer(), surf);
+            // delete surface
+            SDL_FreeSurface(surf);
         }
     }
+    // delete tilemap surface
     SDL_FreeSurface(tileMap);
 }
 
 TileSheet::~TileSheet()
 {
     // destructor
-    free(surfaces);
+    for (int i = 0; i < totalTiles; i++)
+    {
+        SDL_DestroyTexture(textures[i]);
+    }
+    free(textures);
 #if DEBUG
-    printf("Surfaces destroyed, tilemap freed.\n");
+    printf("Textures destroyed, tilemap freed.\n");
 #endif
 }
+
+SDL_Texture* TileSheet::GetTile(int i) { return textures[i]; }

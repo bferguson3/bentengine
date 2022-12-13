@@ -161,11 +161,7 @@ void SDLEngine::addDrawable(GameObject* go)
     drawableObjects[gameObjectCt - 1] = go;
 }
 
-SDL_Renderer* SDLEngine::GetRenderer()
-{
-    // get
-    return renderer;
-}
+SDL_Renderer* SDLEngine::GetRenderer() { return renderer; }
 
 TTF_Font* SDLEngine::GetCurrentFont() { return currentFont; }
 

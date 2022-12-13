@@ -7,7 +7,10 @@ class TileSheet
     TileSheet(const char* src, int tileCtX, int tileCtY, int tileSizeX, int tileSizeY);
     ~TileSheet();
 
+    SDL_Texture* GetTile(int i);
+
   private:
 
-    SDL_Surface** surfaces;
+    int totalTiles;
+    SDL_Texture** textures;
 };

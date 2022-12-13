@@ -19,7 +19,7 @@ typedef signed char s8;
 
 #define OPAQUE 0
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define BPP_16 16
 #define BPP_32 32

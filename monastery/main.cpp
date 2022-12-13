@@ -34,6 +34,9 @@ int main(int argn, char** argv)
     // hello world!
     Text* hw = new Text("Hello World!", 0, 0, 128, 24);
     player = new GameObject();
+    TileSheet* ts = new TileSheet("monkspr.png", 4, 1, 16, 24);
+
+    player->SetTexture(ts->GetTile(0));
 
     LoadScene(0);
 
@@ -63,6 +66,7 @@ int main(int argn, char** argv)
 
     delete player;
     delete hw;
+    delete ts;
 
     return 0;
 }
@@ -91,15 +95,10 @@ void DoInput()
 void LoadScene(int sceneNo)
 {
     // load in player graphics
-    TileSheet* ts = new TileSheet("monkspr.png", 4, 1, 16, 24);
-
-    player->SetTexture(LoadImageToTexture("monkspr.png"));
-    player->SetSize(64, 64);
+    player->SetSize(16, 24);
     // set states TODO - make this class mgr?
     inputMode = DISABLED;
     gameState = TESTSTATE;
-
-    delete ts;
 }
 
 SDL_Texture* LoadImageToTexture(char* path)
