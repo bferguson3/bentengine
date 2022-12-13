@@ -80,6 +80,7 @@ SDLEngine::~SDLEngine()
 {
     free(texturesToRender);
     free(drawableText);
+    free(drawableObjects);
 
     // windows and renderers
     SDL_DestroyRenderer(renderer);
