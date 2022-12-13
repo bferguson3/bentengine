@@ -19,6 +19,9 @@ GameObject::~GameObject()
     SDL_DestroyTexture(texture);
     // set pos to 0
     pos = (SDL_Rect){0, 0, 0, 0};
+#if DEBUG
+    printf("Game object %p destroyed.\n", this);
+#endif
 }
 
 GameObject::GameObject(SDL_Texture* tex, SDL_Rect _pos)

@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include "renderer.h"
 #include "text.h"
+#include "tilesheet.h"
 
 // init sdl class
 SDLEngine engine;
@@ -60,6 +61,9 @@ int main(int argn, char** argv)
         FrameDelay(FPS_60, frameStart, frameEnd);
     }
 
+    delete player;
+    delete hw;
+
     return 0;
 }
 
@@ -87,11 +91,15 @@ void DoInput()
 void LoadScene(int sceneNo)
 {
     // load in player graphics
+    TileSheet* ts = new TileSheet("monkspr.png", 4, 1, 16, 24);
+
     player->SetTexture(LoadImageToTexture("monkspr.png"));
     player->SetSize(64, 64);
     // set states TODO - make this class mgr?
     inputMode = DISABLED;
     gameState = TESTSTATE;
+
+    delete ts;
 }
 
 SDL_Texture* LoadImageToTexture(char* path)

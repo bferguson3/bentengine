@@ -49,7 +49,9 @@ int SDLEngine::init()
     drawableText = (Text**)malloc(sizeof(Text*) * textMAX);
     drawableObjects = (GameObject**)malloc(sizeof(GameObject*) * goMAX);
 
+#if DEBUG
     printf("SDL2 initialized OK!\n");
+#endif
 
     return true;
 }
@@ -87,7 +89,7 @@ SDLEngine::~SDLEngine()
 
     SDL_Quit();
 
-#ifdef DEBUG
+#if DEBUG
     printf("Cleanup done.\n");
 #endif
 }
@@ -108,15 +110,17 @@ void SDLEngine::draw()
     // CLS
     SDL_RenderClear(renderer);
 
-    // rendercopy takes a srcrest (null if all) and dstrect (null if stretch to full)
-    for (int i = 0; i < textObjectCt; i++)
-    {
-        drawableText[i]->display();
-    }
+    // Layer 0
     for (int i = 0; i < gameObjectCt; i++)
     {
         drawableObjects[i]->display();
     }
+    // Layer 1
+    for (int i = 0; i < textObjectCt; i++)
+    {
+        drawableText[i]->display();
+    }
+
     // Drawit
     SDL_RenderPresent(renderer);
 
@@ -166,3 +170,13 @@ SDL_Renderer* SDLEngine::GetRenderer()
 TTF_Font* SDLEngine::GetCurrentFont() { return currentFont; }
 
 float SDLEngine::GetPerfFrequency() { return perfFrequency; }
+
+RGBAMask SDLEngine::getMasks()
+{
+    RGBAMask m;
+    m.rmask = rmask;
+    m.gmask = gmask;
+    m.bmask = bmask;
+    m.amask = amask;
+    return m;
+}

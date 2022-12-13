@@ -290,7 +290,7 @@ void LoadObjects(SDL_Surface* map, const char* objData, u8 mapWidth, u8 mapHeigh
 			if(objData[ix] != 0)
 			{
 				Tile* t = &loadedTiles[objData[ix]];
-				SDL_BlitSurface(t->source, NULL, map, &r);
+				SDL_BlitSurface(t->source, NULL, map, &r); // paint directly to full-screen map
 			}
 			r.x += TILESIZE;
 		}
@@ -510,7 +510,7 @@ void Cleanup()
 	window = NULL;
 	
 	SDL_Quit();
-	#ifdef DEBUG 
+	#if DEBUG 
 		printf("Cleanup done.\n");
 	#endif 
 }

@@ -11,6 +11,14 @@ const SDL_Color clrBlack = {0, 0, 0, 0};
 
 // #define MAXIMUM_ALLOCATED_TEXTURES 1024
 
+typedef struct rgbamask
+{
+    Uint32 rmask;
+    Uint32 gmask;
+    Uint32 bmask;
+    Uint32 amask;
+} RGBAMask;
+
 class SDLEngine
 {
   public:
@@ -23,6 +31,8 @@ class SDLEngine
     void addDrawable(SDL_Texture* tex);
     void addDrawable(Text* t);
     void addDrawable(GameObject* go);
+
+    RGBAMask getMasks();
 
     SDL_Renderer* GetRenderer();
     TTF_Font* GetCurrentFont();

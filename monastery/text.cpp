@@ -32,6 +32,8 @@ Text::Text(const char* _str, int x, int y, int w, int h)
 
 Text::~Text()
 {
-    // surface is freed on creation and texture is freed on the renderer. just delete the obj.
-    delete this;
+//  texture is freed from renderer, surface freed in constructor!
+#if DEBUG
+    printf("Text object deleted: %p\n", this);
+#endif
 }
