@@ -24,7 +24,7 @@ typedef signed char s8;
 #define BPP_16 16
 #define BPP_32 32
 #define TILESIZE 16
-#define PIXELSCALE 2
+#define PIXELSCALE 3
 // 720x360 - 1/2 720p
 // 640x400 - 2x vga
 // 420x240 - 1/3 720p

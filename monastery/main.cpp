@@ -36,7 +36,7 @@ SDL_Texture* LoadImageToTexture(char* path);
 int main(int argn, char** argv)
 {
     // hello world!
-    Text* hw = new Text("Hello World!", 0, 0, 128, 24);
+    Text* hw = new Text("Hello World!", 0, 0, 12 * 8, 16);
     player = new Player(new TileSheet("monkspr.png", 4, 1, 16, 24));
 
     player->SetTexture(0);
@@ -85,9 +85,33 @@ void FrameDelay(float fps, float frameStart, float frameEnd)
 
 void DoInput()
 {
+    const unsigned char* keystate = SDL_GetKeyboardState(NULL);
+
+    SDL_Rect* ppos = player->GetRect();
+
     switch (inputMode)
     {
     case TESTINPUT:
+        if (keystate[SDL_SCANCODE_RIGHT])
+        {
+            ppos->x += 1;
+            player->SetPos(ppos->x, ppos->y);
+        }
+        else if (keystate[SDL_SCANCODE_LEFT])
+        {
+            ppos->x -= 1;
+            player->SetPos(ppos->x, ppos->y);
+        }
+        if (keystate[SDL_SCANCODE_DOWN])
+        {
+            ppos->y += 1;
+            player->SetPos(ppos->x, ppos->y);
+        }
+        else if (keystate[SDL_SCANCODE_UP])
+        {
+            ppos->y -= 1;
+            player->SetPos(ppos->x, ppos->y);
+        }
         break;
     case DISABLED:
         break;
@@ -102,7 +126,7 @@ void LoadScene(int sceneNo)
         // load in player graphics
         player->SetSize(16, 24);
         // set states TODO - make this class mgr?
-        inputMode = DISABLED;
+        inputMode = TESTINPUT;
         gameState = TESTSTATE;
         break;
     }

@@ -13,7 +13,7 @@ int SDLEngine::init()
 
     // fonts
     TTF_Init();
-    defaultFont = TTF_OpenFont("Bakemono-Stereo-Medium-trial.ttf", 64);
+    defaultFont = TTF_OpenFont("Bakemono-Stereo-Medium-trial.ttf", 16);
     if (defaultFont == NULL)
         printf("Failed to load font\n");
     currentFont = defaultFont;
